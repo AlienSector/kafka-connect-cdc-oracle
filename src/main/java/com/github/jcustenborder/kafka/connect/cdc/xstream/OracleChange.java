@@ -226,12 +226,12 @@ class OracleChange implements Change {
     public OracleChange build(RowLCR row) throws StreamsException, SQLException {
       Preconditions.checkNotNull(row, "row cannot be null.");
       Preconditions.checkNotNull(row.getSourceTime(), "row.getSourceTime() cannot be null.");
-      ChangeKey changeKey = new ChangeKey(row.getSourceDatabaseName(), row.getObjectOwner(), row.getObjectName());
+      ChangeKey changeKey = new ChangeKey(this.config.initialDatabase, row.getObjectOwner(), row.getObjectName());
       TableMetadataProvider.TableMetadata tableMetadata = this.tableMetadataProvider.tableMetadata(changeKey);
       Preconditions.checkNotNull(tableMetadata, "tableMetadata cannot be null.");
       OracleChange change = new OracleChange();
       change.timestamp = row.getSourceTime().timestampValue().getTime();
-      change.databaseName = row.getSourceDatabaseName();
+      change.databaseName = this.config.initialDatabase;
       change.schemaName = row.getObjectOwner();
       change.tableName = row.getObjectName();
       Map<String, String> metadata = new LinkedHashMap<>(2);

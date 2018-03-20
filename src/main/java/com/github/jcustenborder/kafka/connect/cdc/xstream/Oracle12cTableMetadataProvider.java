@@ -329,7 +329,8 @@ class Oracle12cTableMetadataProvider extends CachingTableMetadataProvider<Oracle
 
     if (tableMetadata.keyColumns.isEmpty()) {
       log.trace("{}: No keys were found. Using ROW_ID as key.", changeKey);
-      Schema schema = SchemaBuilder.string()
+      Schema schema = SchemaBuilder.string().parameters(
+              ImmutableMap.of(Change.ColumnValue.COLUMN_NAME, "ROW_ID"))
           .optional()
           .doc("Oracle specific ROWID from the incoming RowLCR. https://docs.oracle.com/database/121/SQLRF/pseudocolumns008.htm#SQLRF00254 for more info")
           .build();

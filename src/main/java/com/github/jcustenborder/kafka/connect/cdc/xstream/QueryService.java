@@ -84,7 +84,7 @@ class QueryService extends AbstractExecutionThreadService {
         OracleChange change = receiveChange();
         this.changeWriter.addChange(change);
       } catch (Exception ex) {
-        log.error("Exception thrown", ex);
+        log.trace("Exception thrown", ex);
       }
     }
     finished.countDown();
@@ -101,7 +101,7 @@ class QueryService extends AbstractExecutionThreadService {
     if (lcr instanceof RowLCR) {
       RowLCR rowLCR = (RowLCR) lcr;
 
-      ChangeKey changeKey = new ChangeKey(rowLCR.getSourceDatabaseName(), rowLCR.getObjectOwner(), rowLCR.getObjectName());
+      ChangeKey changeKey = new ChangeKey(this.config.initialDatabase, rowLCR.getObjectOwner(), rowLCR.getObjectName());
       if (this.config.allowedCommands.contains(lcr.getCommandType())) {
         oracleChange = this.oracleChangeBuilder.build(rowLCR);
       } else {

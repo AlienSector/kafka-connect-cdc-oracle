@@ -22,7 +22,7 @@ import org.apache.kafka.connect.storage.OffsetStorageReader;
 
 import java.util.Map;
 
-class OracleSourceTask extends BaseServiceTask<OracleSourceConnectorConfig> {
+public class OracleSourceTask extends BaseServiceTask<OracleSourceConnectorConfig> {
   ChangeWriter changeWriter;
 
   @Override
