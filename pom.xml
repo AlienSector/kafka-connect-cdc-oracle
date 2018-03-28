@@ -27,19 +27,20 @@
 
     <artifactId>kafka-connect-cdc-xstream</artifactId>
 
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.github.jcustenborder.kafka.connect</groupId>
             <artifactId>kafka-connect-cdc</artifactId>
-            <version>${project.version}</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.jcustenborder.kafka.connect</groupId>
             <artifactId>kafka-connect-cdc-test</artifactId>
-            <version>${project.version}</version>
+            <version>${parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

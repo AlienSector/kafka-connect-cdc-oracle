@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.PooledConnection;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -274,6 +275,11 @@ class OracleChange implements Change {
         } catch (SQLException ex) {
           String message = String.format("Exception thrown while processing row. %s: row='%s'", changeKey, position);
           throw new DataException(message, ex);
+        }
+
+        //workaround for Number without scale
+        if (Schema.Type.FLOAT64.equals(schema.type()) && value instanceof BigDecimal) {
+          value = ((BigDecimal) value).doubleValue();
         }
 
         ColumnValue outputColumnValue = new OracleColumnValue(

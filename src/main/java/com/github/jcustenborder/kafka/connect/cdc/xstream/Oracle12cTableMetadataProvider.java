@@ -238,6 +238,7 @@ class Oracle12cTableMetadataProvider extends CachingTableMetadataProvider<Oracle
     SchemaBuilder builder = null;
 
     String dataType = resultSet.getString(2);
+    String scaleString = resultSet.getString(3);
     int scale = resultSet.getInt(3);
     boolean nullable = "Y".equalsIgnoreCase(resultSet.getString(4));
     String comments = resultSet.getString(5);
@@ -246,7 +247,7 @@ class Oracle12cTableMetadataProvider extends CachingTableMetadataProvider<Oracle
       Schema.Type type = TYPE_LOOKUP.get(dataType);
       builder = SchemaBuilder.type(type);
     } else if ("NUMBER".equals(dataType)) {
-      builder = Decimal.builder(scale);
+      builder = scaleString != null ? Decimal.builder(scale) : SchemaBuilder.float64();
     } else if (matches(TIMESTAMP_PATTERN, dataType)) {
       builder = Timestamp.builder();
     } else if (matches(TIMESTAMP_WITH_LOCAL_TIMEZONE, dataType)) {
